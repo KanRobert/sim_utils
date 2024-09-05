@@ -26,4 +26,4 @@ jobs:
 
     - name: LIT test
       run: |
-        test.py
+        ./test.py
