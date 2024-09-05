@@ -106,7 +106,7 @@ if __name__ == '__main__':
         description='Get paths of binaries and SDE profiling data for cpu2017 (version 1.1.8)')
     parser.add_argument('dir', help='directory of cpu2017')
     parser.add_argument('--size', default='train', help='input size (test,train,ref)')
-    parser.add_argument('--label', help='label used in cpu2017 config file')
+    parser.add_argument('--label', required=True, help='label used in cpu2017 config file')
     parser.add_argument('--num', default='0000', help='run number')
     parser.add_argument('--workloads', help='intersting workloads, which can be a subset {}'.format(','.join(all_workloads)))
     parser.add_argument('-o', '--output', required=True, help='output file')
