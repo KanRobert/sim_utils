@@ -1,0 +1,11 @@
+source_line,total,mem-read,mem-write,category-COND_BR,category-UNCOND_BR,ilen-1,ilen-2,ilen-3,ilen-4,ilen-5,ilen-6,ilen-7,ilen-8,ilen-9,ilen-10,ilen-11,ilen-12,ilen-13,ilen-14,ilen-15,PUSH,POP
+/export/users/skan/sim_utils/./test_files/a.c:11,14000,2000,2000,0,0,0,0,0,6000,8000,0,0,0,0,0,0,0,0,0,0,0,0
+/export/users/skan/sim_utils/./test_files/a.c:9,7000,1000,3000,0,0,0,1000,2000,0,4000,0,0,0,0,0,0,0,0,0,0,0,0
+/export/users/skan/sim_utils/./test_files/a.c:8,5005,1001,1001,1001,0,0,1001,3003,0,1001,0,0,0,0,0,0,0,0,0,0,0,0
+??:0,3023,3013,10,0,3013,0,0,0,0,10,3013,0,0,0,0,0,0,0,0,0,10,0
+??:?,23,5,3,1,0,5,3,4,8,0,1,2,0,0,0,0,0,0,0,0,2,1
+crtstuff.c:?,26,5,3,3,1,5,4,6,4,1,0,6,0,0,0,0,0,0,0,0,1,1
+/export/users/skan/sim_utils/./test_files/a.c:5,5,0,2,0,0,1,0,1,1,2,0,0,0,0,0,0,0,0,0,0,1,0
+/export/users/skan/sim_utils/./test_files/a.c:15,5,2,1,0,0,2,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0
+/export/users/skan/sim_utils/./test_files/a.c:7,2,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+/export/users/skan/sim_utils/./test_files/a.c:6,2,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0

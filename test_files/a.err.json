@@ -1,0 +1,1320 @@
+{
+  "bb": [
+    {
+      "entry": "4011a4",
+      "execution": "1000",
+      "exit": "4011df",
+      "total": "14000",
+      "mem-read": "2000",
+      "mem-write": "2000",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "6000",
+      "ilen-5": "8000",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "40118d",
+      "execution": "1000",
+      "exit": "40119f",
+      "total": "6000",
+      "mem-read": "1000",
+      "mem-write": "2000",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1000",
+      "ilen-3": "2000",
+      "ilen-4": "",
+      "ilen-5": "3000",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "4011e4",
+      "execution": "1001",
+      "exit": "4011f2",
+      "total": "5005",
+      "mem-read": "1001",
+      "mem-write": "1001",
+      "category-COND_BR": "1001",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1001",
+      "ilen-3": "3003",
+      "ilen-4": "",
+      "ilen-5": "1001",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401040",
+      "execution": "2000",
+      "exit": "401040",
+      "total": "2000",
+      "mem-read": "2000",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "2000",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "2000",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401188",
+      "execution": "1000",
+      "exit": "401188",
+      "total": "1000",
+      "mem-read": "",
+      "mem-write": "1000",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "1000",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401070",
+      "execution": "1000",
+      "exit": "401070",
+      "total": "1000",
+      "mem-read": "1000",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1000",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "1000",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401080",
+      "execution": "1",
+      "exit": "40109f",
+      "total": "12",
+      "mem-read": "2",
+      "mem-write": "3",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "3",
+      "ilen-2": "2",
+      "ilen-3": "3",
+      "ilen-4": "2",
+      "ilen-5": "",
+      "ilen-6": "1",
+      "ilen-7": "1",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "2",
+      "POP": "1"
+    },
+    {
+      "entry": "401020",
+      "execution": "5",
+      "exit": "401026",
+      "total": "10",
+      "mem-read": "10",
+      "mem-write": "5",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "5",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "10",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "5",
+      "POP": ""
+    },
+    {
+      "entry": "4010f0",
+      "execution": "1",
+      "exit": "401112",
+      "total": "9",
+      "mem-read": "",
+      "mem-write": "",
+      "category-COND_BR": "1",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "4",
+      "ilen-4": "2",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "2",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401166",
+      "execution": "1",
+      "exit": "401173",
+      "total": "5",
+      "mem-read": "",
+      "mem-write": "2",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "1",
+      "ilen-2": "",
+      "ilen-3": "1",
+      "ilen-4": "1",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "401000",
+      "execution": "1",
+      "exit": "401012",
+      "total": "5",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "1",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "1",
+      "ilen-4": "2",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "1",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "4010c0",
+      "execution": "1",
+      "exit": "4010d1",
+      "total": "4",
+      "mem-read": "",
+      "mem-write": "",
+      "category-COND_BR": "1",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "1",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "2",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401208",
+      "execution": "1",
+      "exit": "401214",
+      "total": "4",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "1",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "3",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "4011fe",
+      "execution": "1",
+      "exit": "401204",
+      "total": "3",
+      "mem-read": "2",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "2",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "1",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401146",
+      "execution": "1",
+      "exit": "40114e",
+      "total": "3",
+      "mem-read": "2",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "2",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "1",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": "1"
+    },
+    {
+      "entry": "40113d",
+      "execution": "1",
+      "exit": "401141",
+      "total": "3",
+      "mem-read": "",
+      "mem-write": "2",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "1",
+      "ilen-2": "",
+      "ilen-3": "1",
+      "ilen-4": "",
+      "ilen-5": "1",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "401130",
+      "execution": "1",
+      "exit": "40113b",
+      "total": "3",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "1",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "",
+      "ilen-4": "1",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "1",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401160",
+      "execution": "1",
+      "exit": "401164",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "",
+      "ilen-4": "1",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401056",
+      "execution": "1",
+      "exit": "40105b",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "401066",
+      "execution": "1",
+      "exit": "40106b",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "40117f",
+      "execution": "1",
+      "exit": "401186",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "1",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401178",
+      "execution": "1",
+      "exit": "40117a",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "1",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "1",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401046",
+      "execution": "1",
+      "exit": "40104b",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "401036",
+      "execution": "1",
+      "exit": "40103b",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "401016",
+      "execution": "1",
+      "exit": "40101a",
+      "total": "2",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "1",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "1",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "4011f4",
+      "execution": "1",
+      "exit": "4011f9",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401076",
+      "execution": "1",
+      "exit": "40107b",
+      "total": "2",
+      "mem-read": "",
+      "mem-write": "1",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "2",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "1",
+      "POP": ""
+    },
+    {
+      "entry": "401060",
+      "execution": "1",
+      "exit": "401060",
+      "total": "1",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "1",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401050",
+      "execution": "1",
+      "exit": "401050",
+      "total": "1",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "1",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401030",
+      "execution": "1",
+      "exit": "401030",
+      "total": "1",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "1",
+      "ilen-1": "",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "1",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "401128",
+      "execution": "1",
+      "exit": "401128",
+      "total": "1",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "1",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    },
+    {
+      "entry": "4010e8",
+      "execution": "1",
+      "exit": "4010e8",
+      "total": "1",
+      "mem-read": "1",
+      "mem-write": "",
+      "category-COND_BR": "",
+      "category-UNCOND_BR": "",
+      "ilen-1": "1",
+      "ilen-2": "",
+      "ilen-3": "",
+      "ilen-4": "",
+      "ilen-5": "",
+      "ilen-6": "",
+      "ilen-7": "",
+      "ilen-8": "",
+      "ilen-9": "",
+      "ilen-10": "",
+      "ilen-11": "",
+      "ilen-12": "",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "",
+      "POP": ""
+    }
+  ],
+  "insn": [
+    {
+      "pc": "4011a4",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011a8",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011ad",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011b1",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011b5",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011b9",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011bd",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011c2",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011c6",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011cb",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011d0",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011d5",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011da",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011df",
+      "execution": "1000"
+    },
+    {
+      "pc": "40118d",
+      "execution": "1000"
+    },
+    {
+      "pc": "401190",
+      "execution": "1000"
+    },
+    {
+      "pc": "401193",
+      "execution": "1000"
+    },
+    {
+      "pc": "401195",
+      "execution": "1000"
+    },
+    {
+      "pc": "40119a",
+      "execution": "1000"
+    },
+    {
+      "pc": "40119f",
+      "execution": "1000"
+    },
+    {
+      "pc": "4011e4",
+      "execution": "1001"
+    },
+    {
+      "pc": "4011e7",
+      "execution": "1001"
+    },
+    {
+      "pc": "4011ea",
+      "execution": "1001"
+    },
+    {
+      "pc": "4011ed",
+      "execution": "1001"
+    },
+    {
+      "pc": "4011f2",
+      "execution": "1001"
+    },
+    {
+      "pc": "401040",
+      "execution": "2000"
+    },
+    {
+      "pc": "401188",
+      "execution": "1000"
+    },
+    {
+      "pc": "401070",
+      "execution": "1000"
+    },
+    {
+      "pc": "401080",
+      "execution": "1"
+    },
+    {
+      "pc": "401084",
+      "execution": "1"
+    },
+    {
+      "pc": "401086",
+      "execution": "1"
+    },
+    {
+      "pc": "401089",
+      "execution": "1"
+    },
+    {
+      "pc": "40108a",
+      "execution": "1"
+    },
+    {
+      "pc": "40108d",
+      "execution": "1"
+    },
+    {
+      "pc": "401091",
+      "execution": "1"
+    },
+    {
+      "pc": "401092",
+      "execution": "1"
+    },
+    {
+      "pc": "401093",
+      "execution": "1"
+    },
+    {
+      "pc": "401096",
+      "execution": "1"
+    },
+    {
+      "pc": "401098",
+      "execution": "1"
+    },
+    {
+      "pc": "40109f",
+      "execution": "1"
+    },
+    {
+      "pc": "401020",
+      "execution": "5"
+    },
+    {
+      "pc": "401026",
+      "execution": "5"
+    },
+    {
+      "pc": "4010f0",
+      "execution": "1"
+    },
+    {
+      "pc": "4010f7",
+      "execution": "1"
+    },
+    {
+      "pc": "4010fe",
+      "execution": "1"
+    },
+    {
+      "pc": "401101",
+      "execution": "1"
+    },
+    {
+      "pc": "401104",
+      "execution": "1"
+    },
+    {
+      "pc": "401108",
+      "execution": "1"
+    },
+    {
+      "pc": "40110c",
+      "execution": "1"
+    },
+    {
+      "pc": "40110f",
+      "execution": "1"
+    },
+    {
+      "pc": "401112",
+      "execution": "1"
+    },
+    {
+      "pc": "401166",
+      "execution": "1"
+    },
+    {
+      "pc": "401167",
+      "execution": "1"
+    },
+    {
+      "pc": "40116a",
+      "execution": "1"
+    },
+    {
+      "pc": "40116e",
+      "execution": "1"
+    },
+    {
+      "pc": "401173",
+      "execution": "1"
+    },
+    {
+      "pc": "401000",
+      "execution": "1"
+    },
+    {
+      "pc": "401004",
+      "execution": "1"
+    },
+    {
+      "pc": "401008",
+      "execution": "1"
+    },
+    {
+      "pc": "40100f",
+      "execution": "1"
+    },
+    {
+      "pc": "401012",
+      "execution": "1"
+    },
+    {
+      "pc": "4010c0",
+      "execution": "1"
+    },
+    {
+      "pc": "4010c7",
+      "execution": "1"
+    },
+    {
+      "pc": "4010ce",
+      "execution": "1"
+    },
+    {
+      "pc": "4010d1",
+      "execution": "1"
+    },
+    {
+      "pc": "401208",
+      "execution": "1"
+    },
+    {
+      "pc": "40120c",
+      "execution": "1"
+    },
+    {
+      "pc": "401210",
+      "execution": "1"
+    },
+    {
+      "pc": "401214",
+      "execution": "1"
+    },
+    {
+      "pc": "4011fe",
+      "execution": "1"
+    },
+    {
+      "pc": "401203",
+      "execution": "1"
+    },
+    {
+      "pc": "401204",
+      "execution": "1"
+    },
+    {
+      "pc": "401146",
+      "execution": "1"
+    },
+    {
+      "pc": "40114d",
+      "execution": "1"
+    },
+    {
+      "pc": "40114e",
+      "execution": "1"
+    },
+    {
+      "pc": "40113d",
+      "execution": "1"
+    },
+    {
+      "pc": "40113e",
+      "execution": "1"
+    },
+    {
+      "pc": "401141",
+      "execution": "1"
+    },
+    {
+      "pc": "401130",
+      "execution": "1"
+    },
+    {
+      "pc": "401134",
+      "execution": "1"
+    },
+    {
+      "pc": "40113b",
+      "execution": "1"
+    },
+    {
+      "pc": "401160",
+      "execution": "1"
+    },
+    {
+      "pc": "401164",
+      "execution": "1"
+    },
+    {
+      "pc": "401056",
+      "execution": "1"
+    },
+    {
+      "pc": "40105b",
+      "execution": "1"
+    },
+    {
+      "pc": "401066",
+      "execution": "1"
+    },
+    {
+      "pc": "40106b",
+      "execution": "1"
+    },
+    {
+      "pc": "40117f",
+      "execution": "1"
+    },
+    {
+      "pc": "401186",
+      "execution": "1"
+    },
+    {
+      "pc": "401178",
+      "execution": "1"
+    },
+    {
+      "pc": "40117a",
+      "execution": "1"
+    },
+    {
+      "pc": "401046",
+      "execution": "1"
+    },
+    {
+      "pc": "40104b",
+      "execution": "1"
+    },
+    {
+      "pc": "401036",
+      "execution": "1"
+    },
+    {
+      "pc": "40103b",
+      "execution": "1"
+    },
+    {
+      "pc": "401016",
+      "execution": "1"
+    },
+    {
+      "pc": "40101a",
+      "execution": "1"
+    },
+    {
+      "pc": "4011f4",
+      "execution": "1"
+    },
+    {
+      "pc": "4011f9",
+      "execution": "1"
+    },
+    {
+      "pc": "401076",
+      "execution": "1"
+    },
+    {
+      "pc": "40107b",
+      "execution": "1"
+    },
+    {
+      "pc": "401060",
+      "execution": "1"
+    },
+    {
+      "pc": "401050",
+      "execution": "1"
+    },
+    {
+      "pc": "401030",
+      "execution": "1"
+    },
+    {
+      "pc": "401128",
+      "execution": "1"
+    },
+    {
+      "pc": "4010e8",
+      "execution": "1"
+    }
+  ],
+  "global": [
+    {
+      "total": "2549702",
+      "mem-read": "540636",
+      "mem-write": "390029",
+      "category-COND_BR": "371596",
+      "category-UNCOND_BR": "53560",
+      "ilen-1": "115899",
+      "ilen-2": "473646",
+      "ilen-3": "741180",
+      "ilen-4": "420980",
+      "ilen-5": "284196",
+      "ilen-6": "236153",
+      "ilen-7": "145847",
+      "ilen-8": "85800",
+      "ilen-9": "27857",
+      "ilen-10": "13048",
+      "ilen-11": "5084",
+      "ilen-12": "12",
+      "ilen-13": "",
+      "ilen-14": "",
+      "ilen-15": "",
+      "PUSH": "75982",
+      "POP": "74807"
+    }
+  ]
+}
