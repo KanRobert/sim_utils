@@ -25,6 +25,8 @@ def compare_and_report(files, script):
         log['testing script'] = script
         json.dump(log, sys.stdout, indent=2)
         print('\n')
+        if not same:
+            sys.exit(-1)
 
 def generate(sde, update):
     test_dir = src_test_dir if update else tmp_test_dir
