@@ -20,7 +20,7 @@ def covert_csv_to_json(csv_files):
     common_prefix = os.path.commonprefix(csv_files)
     with open(common_prefix.rstrip('.')+'.json', 'w') as json_file:
         json_dict = defaultdict(list)
-        for csv_file in csv_files:
+        for csv_file in sorted(csv_files):
             name = remove_prefix(csv_file, common_prefix)
             name = remove_suffix(name, '.csv')
             if name not in ['bb', 'insn', 'global']:
