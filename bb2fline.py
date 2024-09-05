@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse
-import csv
-import os
+import argparse, csv, subprocess
 from collections import defaultdict
-import subprocess
 from subprocess import PIPE
 
 def bb_to_fline(bb_csv, binary):

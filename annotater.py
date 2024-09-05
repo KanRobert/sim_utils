@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-import re
-import argparse
-import json
+import re, argparse, json
 
 # Regex for the line of instruction:
 # 1: 48 89 e5  movq %rsp, %rbp

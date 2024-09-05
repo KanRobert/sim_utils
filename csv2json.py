@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-import argparse
-import csv
-import json
-import os
+import argparse, csv, json, os
 from collections import defaultdict
 
 def remove_prefix(text, prefix):

@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
-import re
-import argparse
-import csv
-import os
-import subprocess
+import re, argparse, csv, os, subprocess
 from subprocess import PIPE
 from collections import defaultdict
-
 
 record_regex = re.compile(r'^\*?((?:\w|-)+)\s+([0-9]+)')
 block_regex = re.compile(r'^BLOCK:\s+([0-9]+)\s+PC:\s+([0-9a-f]+)\s+ICOUNT:\s+([0-9]+)\s+EXECUTIONS:\s+([0-9]+)')

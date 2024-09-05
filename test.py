@@ -1,15 +1,7 @@
 #!/usr/bin/env python3
-import re
-import os
-import argparse
-from collections import defaultdict
-import subprocess
+import os, argparse, glob, subprocess, shutil, filecmp, json, sys
 from subprocess import PIPE
-import glob
-import shutil
-import filecmp
-import json
-import sys
+from collections import defaultdict
 
 src_test_dir = './test_files'
 tmp_test_dir = '.test_files'
