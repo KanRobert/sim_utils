@@ -26,6 +26,7 @@ def compare_and_report(files, script):
         json.dump(log, sys.stdout, indent=2)
         print('\n')
         if not same:
+            subprocess.run(['git', 'diff', '--no-index', ref, exp])
             sys.exit(-1)
 
 def generate(sde, update):
