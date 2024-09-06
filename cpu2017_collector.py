@@ -17,7 +17,8 @@ workload,class
 
 503.bwaves_r,fp_rate
 507.cactuBSSN_r,fp_rate
-508.namd_r510.parest_r,fp_rate
+508.namd_r,fp_rate
+510.parest_r,fp_rate
 511.povray_r,fp_rate
 519.lbm_r,fp_rate
 521.wrf_r,fp_rate
@@ -30,7 +31,8 @@ workload,class
 
 600.perlbench_s,int_speed
 602.gcc_s,int_speed
-605.mcf_s620.omnetpp_s,int_speed
+605.mcf_s,int_speed
+620.omnetpp_s,int_speed
 623.xalancbmk_s,int_speed
 625.x264_s,int_speed
 631.deepsjeng_s,int_speed
@@ -40,7 +42,8 @@ workload,class
 
 603.bwaves_s,fp_speed
 607.cactuBSSN_s,fp_speed
-619.lbm_s621.wrf_s,fp_speed
+619.lbm_s,fp_speed
+621.wrf_s,fp_speed
 627.cam4_s,fp_speed
 628.pop2_s,fp_speed
 638.imagick_s,fp_speed
@@ -52,7 +55,7 @@ workload,class
 reader = csv.DictReader(workload_class.split('\n'))
 workloads_classes = {}
 for line in reader:
-    workloads_classes[line['workload'].split('_')[0]] = line['class']
+    workloads_classes[line['workload']] = line['class']
 
 all_workloads = workloads_classes.keys()
 
@@ -101,13 +104,17 @@ def get_path(directory, size, label, num, args_workloads):
 def copy_files(json_dict, dest_dir):
     os.makedirs(dest_dir, exist_ok=True)
     for key, val in json_dict.items():
+        name = val['name']
         run_dir = val['run_dir']
-        exe = os.path.join(run_dir, val['exe'])
-        shutil.copy(exe, dest_dir)
         err_files = val['sim_files'].split(',')
+        # Put files for each workload in a separate directory b/c the names may conflict, e.g., train.err
+        sub_dir = os.path.join(dest_dir, name)
+        os.makedirs(os.path.join(dest_dir, name), exist_ok=True)
+        exe = os.path.join(run_dir, val['exe'])
+        shutil.copy(exe, sub_dir)
         for err_file in err_files:
             err_file = os.path.join(run_dir, err_file)
-            shutil.copy(err_file, dest_dir)
+            shutil.copy(err_file, sub_dir)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
