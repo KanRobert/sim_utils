@@ -94,7 +94,7 @@ def get_path(directory, size, label, num, args_workloads):
             assert exe, 'not found exe'
             assert err_files, 'not found err files'
             json_dict[number]['exe'] = exe
-            json_dict[number]['err_files'] = ','.join(err_files)
+            json_dict[number]['sim_files'] = ','.join(err_files)
 
     return json_dict
 
@@ -104,7 +104,7 @@ def copy_files(json_dict, dest_dir):
         run_dir = val['run_dir']
         exe = os.path.join(run_dir, val['exe'])
         shutil.copy(exe, dest_dir)
-        err_files = val['err_files'].split(',')
+        err_files = val['sim_files'].split(',')
         for err_file in err_files:
             err_file = os.path.join(run_dir, err_file)
             shutil.copy(err_file, dest_dir)

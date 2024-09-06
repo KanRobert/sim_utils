@@ -106,7 +106,7 @@ def convert_sde_prof_to_csv(sde_file, binary):
         find_image_addr_beg = find_image_addr_end = find_global_count_beg = find_global_count_end = find_top_block_beg = find_top_block_end = None
         image_addr_low = image_addr_high = None
         image_first_load_addr = get_image_first_load_addr(os.path.abspath(binary))
-        assert image_first_load_addr, 'not found first load address of image'
+        assert image_first_load_addr is not None, 'not found first load address of image'
 
         for line in prof:
             if 'EMIT_IMAGE_ADDRESSES' in line:
@@ -114,8 +114,8 @@ def convert_sde_prof_to_csv(sde_file, binary):
             elif 'END_IMAGE_ADDRESSES' in line:
                 find_image_addr_end = True
             elif 'EMIT_TOP_BLOCK_STATS' in line:
-                assert image_addr_low, 'not found low addr of image'
-                assert image_addr_high, 'not found high addr of image'
+                assert image_addr_low is not None, 'not found low addr of image'
+                assert image_addr_high is not None, 'not found high addr of image'
                 find_top_block_beg = True
                 bb_writer.writeheader() # row is written when a new bb is found
             elif 'END_TOP_BLOCK_STATS' in line and not find_top_block_end: # SDE emits this twice, one for thread, one for global
@@ -149,9 +149,9 @@ def convert_sde_prof_to_csv(sde_file, binary):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Convert profile data from SDE format to CSV format (only supports single-threaded programs currently).')
-    parser.add_argument('sde_file', action='store', help='Input SDE file')
-    parser.add_argument('binary', action='store', help='Interesting binary')
-    parser.add_argument('--items', type=str, help='Extra interesting items in profile data')
+    parser.add_argument('sde_file', help='Input SDE file')
+    parser.add_argument('binary', help='Interesting binary')
+    parser.add_argument('--items', help='Extra interesting items in profile data')
     args = parser.parse_args()
     items = [s.strip() for s in args.items.split(',')] if args.items else None
     if items:
