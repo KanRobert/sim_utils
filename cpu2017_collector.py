@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, argparse, glob, csv, json, sys, re
+import os, argparse, glob, csv, json, sys, re, shutil
 from collections import defaultdict
 
 workload_class='''\
@@ -56,7 +56,7 @@ for line in reader:
 
 all_workloads = workloads_classes.keys()
 
-def get_path(directory, size, label, num, args_workloads, output):
+def get_path(directory, size, label, num, args_workloads):
     workloads = args_workloads if args_workloads else all_workloads
 
     cpu_dir = os.path.join(directory, 'benchspec/CPU')
@@ -64,42 +64,50 @@ def get_path(directory, size, label, num, args_workloads, output):
     speccmds_pattern = f'run/{run_dir}/speccmds.cmd'
     json_dict = defaultdict(lambda: defaultdict(str))
 
-    with open(output, 'w') as json_file:
-        for workload in workloads:
-            assert workload in all_workloads, f'unsupport workload {workload}'
-            speccmds_path = os.path.join(cpu_dir, workload + '*', speccmds_pattern)
-            speccmds_files = glob.glob(speccmds_path)
-            if not speccmds_files:
-                if args_workloads:
-                    print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
-                continue
-            speccmds_abspath = os.path.abspath(speccmds_files[0])
-            [number, name] = workload.split('.')
-            json_dict[number]['name'] = name
-            json_dict[number]['class'] = workloads_classes[workload]
-            run_dir_abspath = os.path.dirname(speccmds_abspath)
-            json_dict[number]['run_dir'] = run_dir_abspath
-            with open(speccmds_abspath, 'r') as speccmds_file:
-                exe = None
-                err_files = []
-                file_regex = re.compile(r'.*\s-e\s([\w\.-]+)\s.*'+ run_dir + r'/([\w\.-]+)')
-                for line in speccmds_file:
-                    if matches := file_regex.match(line):
-                        new_exe = os.path.basename(matches.group(2))
-                        if exe:
-                            assert new_exe == exe, 'more than 1 exe'
-                        else:
-                            exe = new_exe
-                        err_files.append(os.path.basename(matches.group(1)))
+    for workload in workloads:
+        assert workload in all_workloads, f'unsupport workload {workload}'
+        speccmds_path = os.path.join(cpu_dir, workload + '*', speccmds_pattern)
+        speccmds_files = glob.glob(speccmds_path)
+        if not speccmds_files:
+            if args_workloads:
+                print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
+            continue
+        speccmds_abspath = os.path.abspath(speccmds_files[0])
+        [number, name] = workload.split('.')
+        json_dict[number]['name'] = name
+        json_dict[number]['class'] = workloads_classes[workload]
+        run_dir_abspath = os.path.dirname(speccmds_abspath)
+        json_dict[number]['run_dir'] = run_dir_abspath
+        with open(speccmds_abspath, 'r') as speccmds_file:
+            exe = None
+            err_files = []
+            file_regex = re.compile(r'.*\s-e\s([\w\.-]+)\s.*'+ run_dir + r'/([\w\.-]+)')
+            for line in speccmds_file:
+                if matches := file_regex.match(line):
+                    new_exe = os.path.basename(matches.group(2))
+                    if exe:
+                        assert new_exe == exe, 'more than 1 exe'
+                    else:
+                        exe = new_exe
+                    err_files.append(os.path.basename(matches.group(1)))
 
-                assert exe, 'not found exe'
-                assert err_files, 'not found err files'
-                json_dict[number]['exe'] = exe
-                json_dict[number]['err_files'] = ','.join(err_files)
+            assert exe, 'not found exe'
+            assert err_files, 'not found err files'
+            json_dict[number]['exe'] = exe
+            json_dict[number]['err_files'] = ','.join(err_files)
 
-        json.dump(json_dict, json_file, indent=2)
-        json_file.write('\n')
+    return json_dict
 
+def copy_files(json_dict, dest_dir):
+    os.makedirs(dest_dir, exist_ok=True)
+    for key, val in json_dict.items():
+        run_dir = val['run_dir']
+        exe = os.path.join(run_dir, val['exe'])
+        shutil.copy(exe, dest_dir)
+        err_files = val['err_files'].split(',')
+        for err_file in err_files:
+            err_file = os.path.join(run_dir, err_file)
+            shutil.copy(err_file, dest_dir)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -110,6 +118,14 @@ if __name__ == '__main__':
     parser.add_argument('--num', default='0000', help='run number')
     parser.add_argument('--workloads', help='intersting workloads, which can be a subset {}'.format(','.join(all_workloads)))
     parser.add_argument('-o', '--output', required=True, help='output file')
+    parser.add_argument('--dest_dir', help='copy the found files to specified directory')
     args = parser.parse_args()
 
-    get_path(args.dir, args.size, args.label, args.num, args.workloads, args.output)
+    json_dict = get_path(args.dir, args.size, args.label, args.num, args.workloads)
+    with open(args.output, 'w') as json_file:
+        json.dump(json_dict, json_file, indent=2)
+        json_file.write('\n')
+
+    dest_dir = args.dest_dir
+    if dest_dir:
+        copy_files(json_dict, dest_dir)
