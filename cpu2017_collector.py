@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import os, argparse, glob, csv, json, sys, re, shutil
+import os, argparse, glob, csv, sys, re, shutil
 from collections import defaultdict
 
+# Extract from inrate/fprate/intspeed/fpspeed.bset in cpu2017/benchspec/CPU
 workload_class='''\
 workload,class
 500.perlbench_r,int_rate
@@ -65,7 +66,7 @@ def get_path(directory, size, label, num, args_workloads):
     cpu_dir = os.path.join(directory, 'benchspec/CPU')
     run_dir = f'run_base_{size}_{label}.{num}'
     speccmds_pattern = f'run/{run_dir}/speccmds.cmd'
-    json_dict = defaultdict(lambda: defaultdict(str))
+    csv_dict_list = list(defaultdict(str))
 
     for workload in workloads:
         assert workload in all_workloads, f'unsupport workload {workload}'
@@ -76,14 +77,15 @@ def get_path(directory, size, label, num, args_workloads):
                 print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
             continue
         speccmds_abspath = os.path.abspath(speccmds_files[0])
-        [number, name] = workload.split('.')
-        json_dict[number]['name'] = name
-        json_dict[number]['class'] = workloads_classes[workload]
-        run_dir_abspath = os.path.dirname(speccmds_abspath)
-        json_dict[number]['run_dir'] = run_dir_abspath
+
+        workload_dict = defaultdict(str)
+        workload_dict['name'] = workload
+        workload_dict['class'] = workloads_classes[workload]
+        workload_dict['dir'] = os.path.dirname(speccmds_abspath)
         with open(speccmds_abspath, 'r') as speccmds_file:
             exe = None
             err_files = []
+            # Assume SDE profiling data is writtern to stderr files.
             file_regex = re.compile(r'.*\s-e\s([\w\.-]+)\s.*'+ run_dir + r'/([\w\.-]+)')
             for line in speccmds_file:
                 if matches := file_regex.match(line):
@@ -96,22 +98,24 @@ def get_path(directory, size, label, num, args_workloads):
 
             assert exe, 'not found exe'
             assert err_files, 'not found err files'
-            json_dict[number]['exe'] = exe
-            json_dict[number]['sim_files'] = ','.join(err_files)
+            workload_dict['exe'] = exe
+            workload_dict['sim_files'] = ','.join(err_files)
 
-    return json_dict
+        csv_dict_list.append(workload_dict)
 
-def copy_files(json_dict, dest_dir):
+    return csv_dict_list
+
+def copy_files(csv_dict_list, dest_dir):
     os.makedirs(dest_dir, exist_ok=True)
-    for key, val in json_dict.items():
-        name = val['name']
-        run_dir = val['run_dir']
-        err_files = val['sim_files'].split(',')
+    for row in csv_dict_list:
+        name = row['name']
+        run_dir = row['dir']
         # Put files for each workload in a separate directory b/c the names may conflict, e.g., train.err
         sub_dir = os.path.join(dest_dir, name)
         os.makedirs(os.path.join(dest_dir, name), exist_ok=True)
-        exe = os.path.join(run_dir, val['exe'])
+        exe = os.path.join(run_dir, row['exe'])
         shutil.copy(exe, sub_dir)
+        err_files = row['sim_files'].split(',')
         for err_file in err_files:
             err_file = os.path.join(run_dir, err_file)
             shutil.copy(err_file, sub_dir)
@@ -128,11 +132,14 @@ if __name__ == '__main__':
     parser.add_argument('--dest_dir', help='copy the found files to specified directory')
     args = parser.parse_args()
 
-    json_dict = get_path(args.dir, args.size, args.label, args.num, args.workloads)
-    with open(args.output, 'w') as json_file:
-        json.dump(json_dict, json_file, indent=2)
-        json_file.write('\n')
+    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, args.workloads)
+    with open(args.output, 'w') as csv_file:
+        header = ['name', 'exe', 'sim_files', 'dir', 'class']
+        csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+        csv_writer.writeheader()
+        for row in csv_dict_list:
+            csv_writer.writerow(row)
 
     dest_dir = args.dest_dir
     if dest_dir:
-        copy_files(json_dict, dest_dir)
+        copy_files(csv_dict_list, dest_dir)
