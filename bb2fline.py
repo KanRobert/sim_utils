@@ -4,7 +4,7 @@ import argparse, csv, subprocess
 from collections import defaultdict
 from subprocess import PIPE
 
-def bb_to_fline(bb_csv, binary):
+def bb_to_fline(bb_csv, binary, addr2line):
     assert bb_csv.endswith('bb.csv'), 'not normalized name'
     f_csv = bb_csv[:-6] + 'f.csv'
     line_csv = bb_csv[:-6] + 'line.csv'
@@ -24,7 +24,7 @@ def bb_to_fline(bb_csv, binary):
 
         for bb in bb_reader:
             entry = bb['entry']
-            addr2line_cmd = f'addr2line -e {binary} -a {entry} -f'
+            addr2line_cmd = f'{addr2line} -e {binary} -a {entry} -f'
             fline = subprocess.run(addr2line_cmd.split(), stdout=PIPE, stderr=PIPE, check=True)
             # Assume output looks like:
             #
@@ -60,10 +60,12 @@ def bb_to_fline(bb_csv, binary):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Get function & line profiling info from basic block info (CSV format).')
-    parser.add_argument('bb_csv', action='store', help='Input bb CSV file')
-    parser.add_argument('binary', action='store', help='Profiled binary')
+        description='Get function & line profiling info from basic block info (CSV format), where entry, execution, exit are required')
+    parser.add_argument('bb_csv', help='input bb CSV file')
+    parser.add_argument('binary', help='profiled binary')
+    parser.add_argument('--addr2line', default='addr2line', help='path of addr2line (this is needed if dwarf format of binary is not supported by system addr2line)')
     args = parser.parse_args()
     bb_csv = args.bb_csv
     binary = args.binary
-    bb_to_fline(bb_csv, binary)
+    addr2line = args.addr2line
+    bb_to_fline(bb_csv, binary, addr2line)
