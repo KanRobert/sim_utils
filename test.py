@@ -24,10 +24,13 @@ def compare_and_report(files, script):
 def generate(sde, update):
     test_dir = src_test_dir if update else tmp_test_dir
 
-    exe = f'{test_dir}/a.out'
-    disasm = exe + '.disasm'
-    sde_file = f'{test_dir}/a.err'
-    json_file = sde_file + '.json'
+    exe_name = 'a.out'
+    sim_file_name = 'a.err'
+    disasm_name = 'a.out.disasm'
+
+    [exe, sim_file, disasm] = [f'{test_dir}/{x}' for x in [exe_name, sim_file_name, disasm_name]]
+
+    json_file = f'{sim_file}.json'
 
     if update:
         source_path = f'{src_test_dir}/a.c'
@@ -37,20 +40,23 @@ def generate(sde, update):
             subprocess.run(['objdump', '-d', exe], stdout=f, check=True)
 
         sde_path = os.path.abspath(sde)
-        sde_cmd = f'{sde_path} -future -omix {sde_file} -top_blocks -1 -dynamic_stats_per_block -p -inline -p 0 -- {exe}'
+        sde_cmd = f'{sde_path} -future -omix {sim_file} -top_blocks -1 -dynamic_stats_per_block -p -inline -p 0 -- {exe}'
         subprocess.run(sde_cmd.split(), stdout=PIPE, check=True)
     else:
-        shutil.copytree(src_test_dir, tmp_test_dir, dirs_exist_ok=True)
+        shutil.rmtree(tmp_test_dir, ignore_errors=True)
+        os.makedirs(tmp_test_dir, exist_ok=True)
+        for f in [f'{src_test_dir}/{x}' for x in [exe_name, sim_file_name, disasm_name]]:
+            shutil.copy(f, tmp_test_dir)
 
-    subprocess.run(['./sde2csv.py', sde_file, exe, '--items=PUSH,POP'], check=True)
-    subprocess.run(['./csv2json.py'] + glob.glob(f'{sde_file}.*.csv'), check=True)
+    subprocess.run(['./sde2csv.py', sim_file, exe, '--items=PUSH,POP'], check=True)
+    subprocess.run(['./csv2json.py'] + glob.glob(f'{sim_file}.*.csv'), check=True)
     subprocess.run(['./annotater.py', disasm, json_file], check=True)
-    subprocess.run(['./bb2fline.py', f'{sde_file}.bb.csv', exe], check=True)
+    subprocess.run(['./bb2fline.py', f'{sim_file}.bb.csv', exe], check=True)
 
     if not update:
         compare_and_report(['a.err.bb.csv', 'a.err.insn.csv', 'a.err.global.csv'], 'sde2csv.py')
         compare_and_report(['a.err.json'], 'csv2json.py')
-        compare_and_report(['a.out.disasm.annotated'], 'annotater.py')
+        compare_and_report(['a.err.annotated'], 'annotater.py')
         compare_and_report(['a.err.f.csv', 'a.err.line.csv'], 'bb2fline.py')
 
 if __name__ == '__main__':

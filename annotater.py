@@ -9,7 +9,7 @@ def ratio_number(k, n):
     return '{:.2f}%'.format(k / n * 100)
 
 def annotate(disasm_file, profile_file):
-    with open(disasm_file, 'r') as disasm, open(profile_file, 'r') as profile, open(disasm_file + '.annotated', 'w') as annotated:
+    with open(disasm_file, 'r') as disasm, open(profile_file, 'r') as profile, open(profile_file[:-5] + '.annotated', 'w') as annotated:
         json_data = json.load(profile)
         global_icount = int(json_data['global'][0]['total'])
         insn_count = json_data['insn']
