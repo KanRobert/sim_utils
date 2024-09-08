@@ -13,6 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('--addr2line', default='addr2line', help='path of addr2line (this is needed if dwarf format of binary is not supported by system addr2line)')
     args = parser.parse_args()
 
+    popen_objs = []
     with open(args.csv, 'r') as csv_file:
         reader = csv.DictReader(csv_file)
         dir_path = args.dir
@@ -34,5 +35,9 @@ if __name__ == '__main__':
                 sim_file_path = os.path.join(sub_dir, sim_file)
                 subprocess.run(['./sde2csv.py', sim_file_path, exe_path, f'--items={items}'], check=True)
                 subprocess.run(['./csv2json.py'] + glob.glob(f'{sim_file_path}.*.csv'), check=True)
-                subprocess.run(['./bb2fline.py', f'{sim_file_path}.bb.csv', exe_path, '--addr2line', args.addr2line], check=True)
-                subprocess.run(['./annotater.py', disasm, f'{sim_file_path}.json'], check=True)
+                annoator_popen = subprocess.Popen(['./annotater.py', disasm, f'{sim_file_path}.json'])
+                bb2fline_popen = subprocess.Popen(['./bb2fline.py', f'{sim_file_path}.bb.csv', exe_path, '--addr2line', args.addr2line])
+                popen_objs += [annoator_popen, bb2fline_popen]
+
+    for obj in popen_objs:
+        obj.wait()
