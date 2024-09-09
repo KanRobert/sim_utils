@@ -5,7 +5,7 @@ from subprocess import PIPE
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Process all the files in the directory, whose mappings is described by a csv file, where name, exe, sim_files are required')
+        description='Process all the files in the directory by running sde2csv, csv2json, annotater, bb2fline on them. The mapping from workloads to files is described by a csv file, where name, exe, sim_files are required.')
     parser.add_argument('dir', help='directory of the inputs')
     parser.add_argument('--csv', required=True, help='csv file to describe the mappings')
     parser.add_argument('--items', help='Extra interesting items in sim_files')
