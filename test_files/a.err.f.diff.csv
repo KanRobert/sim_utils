@@ -1,0 +1,22 @@
+{
+  "main": {
+    "ref": {
+      "mem-read": "4003",
+      "mem-write": "6006"
+    },
+    "exp": {
+      "mem-read": "0",
+      "mem-write": "0"
+    }
+  },
+  "_start": {
+    "ref": {
+      "mem-read": "2",
+      "mem-write": "3"
+    },
+    "exp": {
+      "mem-read": "0",
+      "mem-write": "0"
+    }
+  }
+}

@@ -53,11 +53,17 @@ def generate(sde, update):
     subprocess.run(['./annotater.py', disasm, json_file], check=True)
     subprocess.run(['./bb2fline.py', f'{sim_file}.bb.csv', exe], check=True)
 
+    f_csv = f'{sim_file}.f.csv'
+    with open(f'{f_csv}.edited', 'w') as f:
+        subprocess.run(['sed', r's/\(_start\|main\),\w\+,\w\+,\w\+/\1,0,0,0/', f_csv], stdout=f, check=True)
+    subprocess.run(['./diff_csv_for_f.py', f_csv, f'{f_csv}.edited', '--items=mem-read,mem-write', '-o', f'{sim_file}.f.diff.csv'], check=True)
+
     if not update:
         compare_and_report(['a.err.bb.csv', 'a.err.insn.csv', 'a.err.global.csv'], 'sde2csv.py')
         compare_and_report(['a.err.json'], 'csv2json.py')
         compare_and_report(['a.err.annotated'], 'annotater.py')
         compare_and_report(['a.err.f.csv', 'a.err.line.csv'], 'bb2fline.py')
+        compare_and_report(['a.err.f.diff.csv'], 'diff_csv_for_f')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
