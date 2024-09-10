@@ -34,5 +34,3 @@ if __name__ == '__main__':
                     workload_name = name if len(sim_file_names) == 1 else '{}.{}'.format(name, sim_file_name.split('.')[0])
                     global_data_dict = {'name': workload_name} | global_data_dict
                     writer.writerow(global_data_dict)
-
-
