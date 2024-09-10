@@ -9,24 +9,22 @@ from email.policy import SMTP
 from pretty_html_table import build_table
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
 
 def file_to_html_str(path):
     with open(path, 'r') as fp:
         content = fp.read().replace('\n','<br>')
     return content
 
-def add_attachment(msg, path):
-    ctype, encoding = mimetypes.guess_type(path)
-    if ctype is None or encoding is not None:
-        # No guess could be made, or the file is encoded (compressed), so
-        # use a generic bag-of-bits type.
-        ctype = 'application/octet-stream'
-    maintype, subtype = ctype.split('/', 1)
-    with open(path, 'rb') as fp:
-        msg.add_attachment(fp.read(),
-                           maintype=maintype,
-                           subtype=subtype,
-                           filename=os.path.basename(path))
+def add_attachment(msg, f):
+    with open(f, "rb") as fil:
+        part = MIMEApplication(
+            fil.read(),
+            Name=os.path.basename(f)
+        )
+    # After the file is closed
+    part['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(f)
+    msg.attach(part)
 
 def main():
     parser = ArgumentParser(
@@ -59,7 +57,7 @@ def main():
     # Add attachments
     for attachment in args.attachments:
         assert os.path.isfile(attachment), f'{attachment} is not a file'
-        add_attachment(msg, path)
+        add_attachment(msg, attachment)
 
     all_body_content = ''
     # Display the CSVs
