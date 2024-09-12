@@ -132,7 +132,7 @@ if __name__ == '__main__':
     parser.add_argument('--dest_dir', help='copy the found files to specified directory')
     args = parser.parse_args()
 
-    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, args.workloads)
+    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, args.workloads.split(','))
     with open(args.output, 'w') as csv_file:
         header = ['name', 'exe', 'sim_files', 'dir', 'class']
         csv_writer = csv.DictWriter(csv_file, fieldnames=header)
