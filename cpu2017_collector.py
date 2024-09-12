@@ -60,9 +60,7 @@ for line in reader:
 
 all_workloads = workloads_classes.keys()
 
-def get_path(directory, size, label, num, args_workloads):
-    workloads = args_workloads if args_workloads else all_workloads
-
+def get_path(directory, size, label, num, workloads):
     cpu_dir = os.path.join(directory, 'benchspec/CPU')
     run_dir = f'run_base_{size}_{label}.{num}'
     speccmds_pattern = f'run/{run_dir}/speccmds.cmd'
@@ -73,8 +71,7 @@ def get_path(directory, size, label, num, args_workloads):
         speccmds_path = os.path.join(cpu_dir, workload + '*', speccmds_pattern)
         speccmds_files = glob.glob(speccmds_path)
         if not speccmds_files:
-            if args_workloads:
-                print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
+            print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
             continue
         speccmds_abspath = os.path.abspath(speccmds_files[0])
 
@@ -132,7 +129,8 @@ if __name__ == '__main__':
     parser.add_argument('--dest_dir', help='copy the found files to specified directory')
     args = parser.parse_args()
 
-    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, args.workloads.split(','))
+    workloads = args.workloads.split(',') if args.workloads else all_workloads
+    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, workloads)
     with open(args.output, 'w') as csv_file:
         header = ['name', 'exe', 'sim_files', 'dir', 'class']
         csv_writer = csv.DictWriter(csv_file, fieldnames=header)
