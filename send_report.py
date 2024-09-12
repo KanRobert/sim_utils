@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os, smtplib, subprocess, mimetypes, socket
+import os, smtplib, subprocess, mimetypes, socket, sys
 import pandas as pd
 
 
@@ -56,7 +56,9 @@ def main():
 
     # Add attachments
     for attachment in args.attachments:
-        assert os.path.isfile(attachment), f'{attachment} is not a file'
+        if not os.path.isfile(attachment):
+            print(f'warning: {attachment} is not a file', file=sys.stderr)
+            continue
         add_attachment(msg, attachment)
 
     all_body_content = ''
