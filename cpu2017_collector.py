@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import os, argparse, glob, csv, sys, re, shutil
+import os, argparse, glob, csv, sys, re
 from collections import defaultdict
 
 # Extract from inrate/fprate/intspeed/fpspeed.bset in cpu2017/benchspec/CPU
+# class field is for future usage
 workload_class='''\
 workload,class
 500.perlbench_r,int_rate
@@ -74,11 +75,10 @@ def get_path(directory, size, label, num, workloads):
             print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
             continue
         speccmds_abspath = os.path.abspath(speccmds_files[0])
+        directory = os.path.dirname(speccmds_abspath)
 
         workload_dict = defaultdict(str)
         workload_dict['name'] = workload
-        workload_dict['class'] = workloads_classes[workload]
-        workload_dict['dir'] = os.path.dirname(speccmds_abspath)
         with open(speccmds_abspath, 'r') as speccmds_file:
             exe = None
             err_files = []
@@ -91,53 +91,39 @@ def get_path(directory, size, label, num, workloads):
                         assert new_exe == exe, 'more than 1 exe'
                     else:
                         exe = new_exe
-                    err_files.append(os.path.basename(matches.group(1)))
+                    err_files.append(os.path.join(directory, os.path.basename(matches.group(1))))
 
             assert exe, 'not found exe'
             assert err_files, 'not found err files'
-            workload_dict['exe'] = exe
+            workload_dict['exe'] = os.path.join(directory, exe)
             workload_dict['sim_files'] = ','.join(err_files)
 
         csv_dict_list.append(workload_dict)
 
     return csv_dict_list
 
-def copy_files(csv_dict_list, dest_dir):
-    os.makedirs(dest_dir, exist_ok=True)
-    for row in csv_dict_list:
-        name = row['name']
-        run_dir = row['dir']
-        # Put files for each workload in a separate directory b/c the names may conflict, e.g., train.err
-        sub_dir = os.path.join(dest_dir, name)
-        os.makedirs(os.path.join(dest_dir, name), exist_ok=True)
-        exe = os.path.join(run_dir, row['exe'])
-        shutil.copy(exe, sub_dir)
-        err_files = row['sim_files'].split(',')
-        for err_file in err_files:
-            err_file = os.path.join(run_dir, err_file)
-            shutil.copy(err_file, sub_dir)
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Get paths of binaries and SDE profiling data for cpu2017 (version 1.1.8)')
+        description='Get paths of binaries and SDE perf data for cpu2017 (version 1.1.8)')
     parser.add_argument('dir', help='directory of cpu2017')
-    parser.add_argument('--size', default='train', help='input size (test,train,ref)')
+    parser.add_argument('--size', choices=['test', 'train', 'ref'])
     parser.add_argument('--label', required=True, help='label used in cpu2017 config file')
     parser.add_argument('--num', default='0000', help='run number')
     parser.add_argument('--workloads', help='intersting workloads, which can be a subset {}'.format(','.join(all_workloads)))
-    parser.add_argument('-o', '--output', required=True, help='output file')
-    parser.add_argument('--dest_dir', help='copy the found files to specified directory')
+    parser.add_argument('--filter', choices=['speed', 'rate'])
+    parser.add_argument('-o', '--output', required=True, help='output CSV for the paths')
     args = parser.parse_args()
 
     workloads = args.workloads.split(',') if args.workloads else all_workloads
+    if args.filter == 'speed':
+        workloads = [workload for workload in workloads if workload.endswith('_s')]
+    elif args.filter == 'rate':
+        workloads = [workload for workload in workloads if workload.endswith('_r')]
+
     csv_dict_list = get_path(args.dir, args.size, args.label, args.num, workloads)
     with open(args.output, 'w') as csv_file:
-        header = ['name', 'exe', 'sim_files', 'dir', 'class']
+        header = ['name', 'exe', 'sim_files']
         csv_writer = csv.DictWriter(csv_file, fieldnames=header)
         csv_writer.writeheader()
         for row in csv_dict_list:
             csv_writer.writerow(row)
-
-    dest_dir = args.dest_dir
-    if dest_dir:
-        copy_files(csv_dict_list, dest_dir)
