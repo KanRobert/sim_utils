@@ -104,7 +104,7 @@ def get_path(directory, size, label, num, workloads):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Get paths of binaries and SDE perf data for cpu2017 (version 1.1.8)')
+        description='Get paths of binaries and SDE perf data for cpu2017 (version 1.1.8), assuming perf data is written to stderr, e.g. for sde, "-omix /dev/stderr -top_blocks -1 -dynamic_stats_per_block" is used in the submit')
     parser.add_argument('dir', help='directory of cpu2017')
     parser.add_argument('--size', choices=['test', 'train', 'ref'])
     parser.add_argument('--label', required=True, help='label used in cpu2017 config file')
