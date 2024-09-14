@@ -91,7 +91,7 @@ def get_image_first_load_addr(binary):
         if 'LOAD' in line:
             return int(line.strip().split()[2], 16)
 
-def convert_sde_prof_to_csv(sde_file, binary):
+def convert_sde_perf_to_csv(sde_file, binary):
     bb_header = ['entry', 'execution', 'exit'] + roi
     insn_header = ['pc', 'execution']
     global_header = roi
@@ -113,24 +113,25 @@ def convert_sde_prof_to_csv(sde_file, binary):
                 find_image_addr_beg = True
             elif 'END_IMAGE_ADDRESSES' in line:
                 find_image_addr_end = True
-            elif 'EMIT_TOP_BLOCK_STATS' in line:
+            elif 'EMIT_GLOBAL_TOP_BLOCK_STATS' in line:
                 assert image_addr_low is not None, 'not found low addr of image'
                 assert image_addr_high is not None, 'not found high addr of image'
                 find_top_block_beg = True
                 bb_writer.writeheader() # row is written when a new bb is found
-            elif 'END_TOP_BLOCK_STATS' in line and not find_top_block_end: # SDE emits this twice, one for thread, one for global
+            # SDE emits this twice, one for thread, one for global
+            elif 'END_TOP_BLOCK_STATS' in line and find_top_block_beg and not find_top_block_end:
                 find_top_block_end = True
                 assert find_top_block_beg, 'not found top block begin yet'
                 insn_writer.writeheader()
                 for key, val in icounts.items():
                     row = dict(zip(insn_header, [key, val]))
                     insn_writer.writerow(row)
-            elif "global-dynamic-counts" in line:
+            elif 'global-dynamic-counts' in line:
                 find_global_count_beg = True
                 assert find_top_block_end, 'not found top block end yet'
                 global_writer.writeheader()
                 metrics.clear()
-            elif "END_GLOBAL_DYNAMIC_STATS" in line:
+            elif 'END_GLOBAL_DYNAMIC_STATS' in line:
                 find_global_count_end = True
                 assert find_global_count_beg, 'not found global count begin yet'
                 global_writer.writerow(metrics)
@@ -148,12 +149,12 @@ def convert_sde_prof_to_csv(sde_file, binary):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Convert profile data from SDE format to CSV format (only supports single-threaded programs currently).')
-    parser.add_argument('sde_file', help='Input SDE file')
-    parser.add_argument('binary', help='Interesting binary')
-    parser.add_argument('--items', help='Extra interesting items in profile data')
+        description='Convert perf data from SDE format to CSV format')
+    parser.add_argument('sde_file', help='SDE file for perf')
+    parser.add_argument('binary', help='binary for perf')
+    parser.add_argument('--items', help='extra interesting items in perf data')
     args = parser.parse_args()
     items = [s.strip() for s in args.items.split(',')] if args.items else None
     if items:
         roi += items
-    convert_sde_prof_to_csv(args.sde_file, args.binary)
+    convert_sde_perf_to_csv(args.sde_file, args.binary)
