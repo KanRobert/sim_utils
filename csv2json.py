@@ -32,6 +32,6 @@ def covert_csv_to_json(csv_files):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Combine *.bb/insn/global.csv files to a single file *.json.')
-    parser.add_argument('csv_file', nargs='+', help='Input CSV files')
+    parser.add_argument('csv_file', nargs='+', help='input CSV files')
     args = parser.parse_args()
     covert_csv_to_json(args.csv_file)
