@@ -14,7 +14,7 @@ from email.mime.application import MIMEApplication
 def file_to_html_str(path):
     with open(path, 'r') as fp:
         content = fp.read().replace('\n','<br>')
-    return content
+    return '<pre>' + content + '</pre>'
 
 def add_attachment(msg, f):
     with open(f, "rb") as fil:
@@ -41,7 +41,7 @@ def main():
 
     directory = os.path.abspath(args.dir)
     hostname = socket.gethostname()
-    file_location = f'{hostname}:{directory}'
+    file_location = f'{directory} at {hostname}'
     subject = args.subject if args.subject else f'Summary for {file_location}'
     usermail = subprocess.run(['git', 'config', 'user.email'], stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
     sender = args.sender if args.sender else usermail
@@ -85,11 +85,11 @@ def main():
 
 
     # Point out file location
-    all_body_content += '<h1>File Location</h1>'
-    all_body_content += f'{file_location}<br>'
+    all_body_content += '<h1>file location</h1>'
+    all_body_content += f'<pre>{file_location}</pre>'
 
     # Attach body
-    msg.attach(MIMEText(all_body_content, 'html'))
+    msg.attach(MIMEText(all_body_content, 'html', 'utf-8'))
 
     # Now send or store the message
     if args.output:
