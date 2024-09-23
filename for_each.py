@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 import argparse, csv, os, subprocess, glob
 from subprocess import PIPE
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def process_file(repo, sub_dir, sim_file, exe_path, items, disasm, args):
+    # X -> Y means X relies on Y
+    # annotater -> csv2json -> sde2csv
+    #           -> objdump
+    #
+    # bb2fline -> sde2csv
+    sim_file_path = os.path.join(sub_dir, sim_file)
+    subprocess.run([os.path.join(repo, 'sde2csv.py'), sim_file_path, exe_path, f'--items={items}'], check=True)
+    csv_files = glob.glob(f'{sim_file_path}.*.csv')
+    subprocess.run([os.path.join(repo, 'csv2json.py')] + csv_files, check=True)
+    annotater_popen = subprocess.Popen([os.path.join(repo, 'annotater.py'), disasm, f'{sim_file_path}.json'])
+    bb2fline_popen = subprocess.Popen([os.path.join(repo, 'bb2fline.py'), f'{sim_file_path}.bb.csv', exe_path, '--addr2line', args.addr2line])
+    return [annotater_popen, bb2fline_popen]
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -13,34 +28,33 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     repo = os.path.dirname(os.path.realpath(__file__))
-    popen_objs = []
-    # X -> Y means X relies on Y
-    # annotater -> csv2json -> sde2csv
-    #           -> objdump
-    #
-    # bb2fline -> sde2csv
+    dir_path = args.dir
+    items = args.items if args.items else ''
+
     with open(args.csv, 'r') as csv_file:
         reader = csv.DictReader(csv_file)
-        dir_path = args.dir
-        items = args.items if args.items else ''
-        for row in reader:
-            name = row['name']
-            exe = row['exe']
-            sim_files = row['sim_files'].split(',')
-            sub_dir = os.path.join(dir_path, name)
-            exe_path = os.path.join(sub_dir, exe)
+        futures = []
+        popen_objs = []
 
-            disasm = exe_path + '.disasm'
-            dump = subprocess.run([f'{args.objdump}', '-d', exe_path], stdout=PIPE, check=True)
-            with open(disasm, 'w') as disasm_file:
-                disasm_file.write(dump.stdout.decode('utf-8'))
+        with ThreadPoolExecutor() as executor:
+            for row in reader:
+                name = row['name']
+                exe = row['exe']
+                sim_files = row['sim_files'].split(',')
+                sub_dir = os.path.join(dir_path, name)
+                exe_path = os.path.join(sub_dir, exe)
 
-            for sim_file in sim_files:
-                sim_file_path = os.path.join(sub_dir, sim_file)
-                subprocess.run([os.path.join(repo, 'sde2csv.py'), sim_file_path, exe_path, f'--items={items}'], check=True)
-                subprocess.run([os.path.join(repo, 'csv2json.py')] + glob.glob(f'{sim_file_path}.*.csv'), check=True)
-                annoator_popen = subprocess.Popen([os.path.join(repo, 'annotater.py'), disasm, f'{sim_file_path}.json'])
-                bb2fline_popen = subprocess.Popen([os.path.join(repo, 'bb2fline.py'), f'{sim_file_path}.bb.csv', exe_path, '--addr2line', args.addr2line])
-                popen_objs += [annoator_popen, bb2fline_popen]
+                disasm = exe_path + '.disasm'
+                dump = subprocess.run([f'{args.objdump}', '-d', exe_path], stdout=PIPE, check=True)
+                with open(disasm, 'w') as disasm_file:
+                    disasm_file.write(dump.stdout.decode('utf-8'))
+                    os.fsync(disasm_file.fileno())
 
-    [obj.wait() for obj in popen_objs]
+                for sim_file in sim_files:
+                    future = executor.submit(process_file, repo, sub_dir, sim_file, exe_path, items, disasm, args)
+                    futures.append(future)
+
+            for future in as_completed(futures):
+                popen_objs.extend(future.result())
+
+        [obj.wait() for obj in popen_objs]
