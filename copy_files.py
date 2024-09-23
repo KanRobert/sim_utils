@@ -11,23 +11,21 @@ if __name__ == '__main__':
 
     with open(args.csv, 'r') as csv_file, open(args.output, 'w') as output_file:
         csv_reader = csv.DictReader(csv_file)
-        csv_writer = csv.DictWriter(output_file, fieldnames=['name', 'exe', 'sim_files'])
+        for f in ['name', 'exe', 'sim_files']:
+            assert f in csv_reader.fieldnames, f'cannot find field {f}'
+        csv_writer = csv.DictWriter(output_file, fieldnames=csv_reader.fieldnames)
         csv_writer.writeheader()
         exe_from_to = {}
         for row in csv_reader:
-            name = row['name']
-            exe = row['exe']
+            new_row = row.copy()
             sim_files = row['sim_files'].split(',')
-
-            new_row = {}
-            new_row['name'] = name
-            new_row['exe'] = os.path.basename(exe)
             new_row['sim_files'] = ','.join([os.path.basename(sim_file) for sim_file in sim_files])
 
-            sub_dir = os.path.join(args.dst, name)
+            sub_dir = os.path.join(args.dst, new_row['name'])
             if os.path.isdir(sub_dir):
                  shutil.rmtree(sub_dir)
             os.mkdir(sub_dir)
+            exe = new_row['exe']
             to_exe = os.path.join(sub_dir, os.path.basename(exe))
             # Avoid duplicated copies
             if exe in exe_from_to:

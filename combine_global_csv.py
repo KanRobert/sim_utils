@@ -18,6 +18,7 @@ if __name__ == '__main__':
         dir_path = args.dir
         for row in reader:
             name = row['name']
+            workload_class = row['class'] if 'class' in row else None
             sim_file_names = row['sim_files'].split(',')
             sub_dir = os.path.join(dir_path, name)
             for sim_file_name in sim_file_names:
@@ -26,11 +27,18 @@ if __name__ == '__main__':
                 with open(global_csv_file_abspath, 'r') as global_csv_file:
                     global_csv_file_reader = csv.DictReader(global_csv_file)
                     if not writer:
-                        header = ['name'] + global_csv_file_reader.fieldnames
+                        extra_fieldnames = ['name']
+                        if workload_class:
+                            extra_fieldnames += ['class']
+                        header = extra_fieldnames + global_csv_file_reader.fieldnames
                         writer = csv.DictWriter(out_file, fieldnames = header)
                         writer.writeheader()
 
                     global_data_dict = next(global_csv_file_reader)
                     workload_name = name if len(sim_file_names) == 1 else '{}.{}'.format(name, sim_file_name.split('.')[0])
-                    global_data_dict = {'name': workload_name} | global_data_dict
+                    extra_data_dict = {'name': workload_name}
+                    if workload_class:
+                        extra_data_dict |= {'class': workload_class}
+
+                    global_data_dict = extra_data_dict | global_data_dict
                     writer.writerow(global_data_dict)

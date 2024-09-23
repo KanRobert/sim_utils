@@ -61,7 +61,7 @@ for line in reader:
 
 all_workloads = workloads_classes.keys()
 
-def get_path(directory, size, label, num, workloads):
+def get_path(directory, size, label, num, classes, workloads):
     cpu_dir = os.path.join(directory, 'benchspec/CPU')
     run_dir = f'run_base_{size}_{label}.{num}'
     speccmds_pattern = f'run/{run_dir}/speccmds.cmd'
@@ -79,6 +79,8 @@ def get_path(directory, size, label, num, workloads):
 
         workload_dict = defaultdict(str)
         workload_dict['name'] = workload
+        if classes:
+            workload_dict['class'] = workloads_classes[workload]
         with open(speccmds_abspath, 'r') as speccmds_file:
             exe = None
             err_files = []
@@ -111,6 +113,7 @@ if __name__ == '__main__':
     parser.add_argument('--num', default='0000', help='run number')
     parser.add_argument('--workloads', help='intersting workloads, which can be a subset {}'.format(','.join(all_workloads)))
     parser.add_argument('--filter', choices=['speed', 'rate'])
+    parser.add_argument('--classes', action='store_true', help='add class info: int_rate, fp_rate, int_speed, fp_speed')
     parser.add_argument('-o', '--output', required=True, help='output CSV for the paths')
     args = parser.parse_args()
 
@@ -120,9 +123,9 @@ if __name__ == '__main__':
     elif args.filter == 'rate':
         workloads = [workload for workload in workloads if workload.endswith('_r')]
 
-    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, workloads)
+    csv_dict_list = get_path(args.dir, args.size, args.label, args.num, args.classes, workloads)
     with open(args.output, 'w') as csv_file:
-        header = ['name', 'exe', 'sim_files']
+        header = csv_dict_list[0].keys()
         csv_writer = csv.DictWriter(csv_file, fieldnames=header)
         csv_writer.writeheader()
         for row in csv_dict_list:
