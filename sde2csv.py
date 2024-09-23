@@ -91,10 +91,28 @@ def get_image_first_load_addr(binary):
         if 'LOAD' in line:
             return int(line.strip().split()[2], 16)
 
+def get_image_text_size(binary):
+    pg_header = subprocess.run(['readelf', '-S', binary], stdout=PIPE, check=True)
+    # Assume the section headers looks like:
+    #
+    # Section Headers:
+    #   [Nr] Name              Type             Address           Offset
+    #        Size              EntSize          Flags  Link  Info  Align
+    #   [13] .text             PROGBITS         0000000000087810  00086810
+    #        00000000001f8625  0000000000000000  AX       0     0     16
+
+    pg_header = pg_header.stdout.decode('utf-8').strip()
+    next_is_size = False
+    for line in pg_header.splitlines():
+        if next_is_size:
+            return int(line.strip().split()[0], 16)
+        elif ' .text ' in line:
+            next_is_size = True
+
 def convert_sde_perf_to_csv(sde_file, binary):
     bb_header = ['entry', 'execution', 'exit'] + roi
     insn_header = ['pc', 'execution']
-    global_header = roi
+    global_header = roi + ['text_size']
 
     with open(sde_file, 'r') as prof, open(sde_file+'.bb.csv', 'w') as bb_csv, open(sde_file+'.insn.csv', 'w') as insn_csv, open(sde_file+'.global.csv', 'w') as global_csv:
         bb_writer = csv.DictWriter(bb_csv, fieldnames=bb_header)
@@ -107,6 +125,7 @@ def convert_sde_perf_to_csv(sde_file, binary):
         image_addr_low = image_addr_high = None
         image_first_load_addr = get_image_first_load_addr(os.path.abspath(binary))
         assert image_first_load_addr is not None, 'not found first load address of image'
+        image_text_size = get_image_text_size(os.path.abspath(binary))
 
         for line in prof:
             if 'EMIT_IMAGE_ADDRESSES' in line:
@@ -134,7 +153,9 @@ def convert_sde_perf_to_csv(sde_file, binary):
             elif 'END_GLOBAL_DYNAMIC_STATS' in line:
                 find_global_count_end = True
                 assert find_global_count_beg, 'not found global count begin yet'
-                global_writer.writerow(metrics)
+                global_metrics = metrics.copy()
+                global_metrics['text_size'] = image_text_size
+                global_writer.writerow(global_metrics)
 
             if find_image_addr_beg and not find_image_addr_end:
                 if match := imag_addr_regex.match(line):
