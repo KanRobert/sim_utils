@@ -19,13 +19,14 @@ if __name__ == '__main__':
         for row in csv_reader:
             new_row = row.copy()
             sim_files = row['sim_files'].split(',')
+            exe = row['exe']
+            new_row['exe'] = os.path.basename(exe)
             new_row['sim_files'] = ','.join([os.path.basename(sim_file) for sim_file in sim_files])
 
             sub_dir = os.path.join(args.dst, new_row['name'])
             if os.path.isdir(sub_dir):
                  shutil.rmtree(sub_dir)
             os.mkdir(sub_dir)
-            exe = new_row['exe']
             to_exe = os.path.join(sub_dir, os.path.basename(exe))
             # Avoid duplicated copies
             if exe in exe_from_to:
