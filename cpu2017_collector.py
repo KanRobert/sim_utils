@@ -117,7 +117,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output', required=True, help='output CSV for the paths')
     args = parser.parse_args()
 
-    workloads = args.workloads.split(',') if args.workloads else all_workloads
+    workloads = re.split(r'[,\s]+', args.workloads) if args.workloads else all_workloads
     if args.filter == 'speed':
         workloads = [workload for workload in workloads if workload.endswith('_s')]
     elif args.filter == 'rate':
