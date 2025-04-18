@@ -14,5 +14,3 @@ Personally tested cpu2017, cpuv8, geekbench, coremark-pro and accel2023.
 * Write and run a collector for your workloads to generate the CSV file to describe the mappings between files. `cpu2017_collector.py` gives an example.
 * Then run `copy_files.py`, `for_each.py`, `combine_global_csv.py`, `diff_csv_for_f_wrapper.py`.
 * `send_report.py` can help send the data by mail.
-
-
