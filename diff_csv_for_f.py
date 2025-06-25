@@ -40,4 +40,8 @@ if __name__ == '__main__':
     parser.add_argument('--items', required=True, help='items to compare')
     parser.add_argument('-o', '--output', required=True, help='output json file')
     args = parser.parse_args()
-    diff_csv(args.ref, args.exp, args.items.split(','), args.output)
+    try:
+        diff_csv(args.ref, args.exp, args.items.split(','), args.output)
+    except:
+        print("Couldn't diff CSV for ", args.ref, args.exp)
+        pass
