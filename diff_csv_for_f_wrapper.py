@@ -20,6 +20,7 @@ if __name__ == '__main__':
         exp_reader = csv.DictReader(exp_csv_file)
         for ref_row, exp_row in zip(ref_reader, exp_reader):
             name = ref_row['name']
+            print (name, exp_row['name'])
             assert name == exp_row['name'], 'name mismatch'
             ref_sim_files = ref_row['sim_files'].split(',')
             exp_sim_files = exp_row['sim_files'].split(',')
@@ -28,12 +29,15 @@ if __name__ == '__main__':
                 ref_f_file_path = os.path.join(args.ref, name, f'{ref_sim_file}.f.csv')
                 exp_f_file_path = os.path.join(args.exp, name, f'{exp_sim_file}.f.csv')
                 tmp = tempfile.NamedTemporaryFile(delete=False)
-                subprocess.run([os.path.join(repo, 'diff_csv_for_f.py'), ref_f_file_path, exp_f_file_path, f'--items={args.items}', '-o', tmp.name], check=True)
-                with open(tmp.name, 'r') as tmp_file:
-                    json_dict = json.load(tmp_file)
-                    workload_name = name if len(ref_sim_files) == 1 else '{}.{}'.format(name, ref_sim_file.split('.')[0])
-                    out_dict[workload_name] = json_dict
-                os.unlink(tmp.name)
+                try:
+                    subprocess.run([os.path.join(repo, 'diff_csv_for_f.py'), ref_f_file_path, exp_f_file_path, f'--items={args.items}', '-o', tmp.name], check=True)
+                    with open(tmp.name, 'r') as tmp_file:
+                        json_dict = json.load(tmp_file)
+                        workload_name = name if len(ref_sim_files) == 1 else '{}.{}'.format(name, ref_sim_file.split('.')[0])
+                        out_dict[workload_name] = json_dict
+                    os.unlink(tmp.name)
+                except:
+                    print("Error, continuing...")
 
     with open(args.output, 'w') as out_file:
         json.dump(out_dict, out_file, indent=2)

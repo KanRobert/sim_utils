@@ -51,10 +51,18 @@ if __name__ == '__main__':
                     os.fsync(disasm_file.fileno())
 
                 for sim_file in sim_files:
-                    future = executor.submit(process_file, repo, sub_dir, sim_file, exe_path, items, disasm, args)
-                    futures.append(future)
+                    try:
+                        future = executor.submit(process_file, repo, sub_dir, sim_file, exe_path, items, disasm, args)
+                        futures.append(future)
+                    except:
+                        print("Couldn't process file", repo, sub_dir, sim_file)
+                        pass
 
             for future in as_completed(futures):
-                popen_objs.extend(future.result())
+                try:
+                    popen_objs.extend(future.result())
+                except:
+                    print("Future couldn't be processed, it threw an exception")
+                    pass
 
         [obj.wait() for obj in popen_objs]

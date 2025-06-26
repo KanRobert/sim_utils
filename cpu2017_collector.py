@@ -60,6 +60,7 @@ for line in reader:
     workloads_classes[line['workload']] = line['class']
 
 all_workloads = workloads_classes.keys()
+print(all_workloads)
 
 def get_path(directory, size, label, num, classes, workloads):
     cpu_dir = os.path.join(directory, 'benchspec/CPU')
@@ -67,6 +68,7 @@ def get_path(directory, size, label, num, classes, workloads):
     speccmds_pattern = f'run/{run_dir}/speccmds.cmd'
     csv_dict_list = list(defaultdict(str))
 
+    print(run_dir)
     for workload in workloads:
         assert workload in all_workloads, f'unsupport workload {workload}'
         speccmds_path = os.path.join(cpu_dir, workload + '*', speccmds_pattern)
@@ -74,6 +76,9 @@ def get_path(directory, size, label, num, classes, workloads):
         if not speccmds_files:
             print(f'warning: cannot find speccmds.cmd for {workload} with input:{size}, label:{label}', file=sys.stderr)
             continue
+        else:
+            print(f'Found speccmds.cmd for {workload}')
+
         speccmds_abspath = os.path.abspath(speccmds_files[0])
         directory = os.path.dirname(speccmds_abspath)
 

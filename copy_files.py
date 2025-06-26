@@ -36,6 +36,9 @@ if __name__ == '__main__':
                 exe_from_to[exe] = to_exe
 
             for sim_file in sim_files:
-                shutil.copy(sim_file, sub_dir)
+                try:
+                    shutil.copy(sim_file, sub_dir)
+                except:
+                    print("Copy failed for", sim_file, sub_dir)
 
             csv_writer.writerow(new_row)
