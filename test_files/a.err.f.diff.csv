@@ -1,8 +1,8 @@
 {
   "main": {
     "ref": {
-      "mem-read": "4003",
-      "mem-write": "6006"
+      "mem-read": "3003",
+      "mem-write": "5006"
     },
     "exp": {
       "mem-read": "0",
