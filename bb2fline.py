@@ -3,6 +3,9 @@
 import argparse, csv, subprocess
 from collections import defaultdict
 from subprocess import PIPE
+import threading, os
+
+file_creation_lock = threading.Lock()
 
 def batch_addr2line(addr2line, binary, addresses):
     """Batch process addresses to improve efficiency."""
@@ -37,9 +40,18 @@ def bb_to_fline(bb_csv, binary, addr2line):
             addresses.append(entry)
             bb_entries.append(bb)
 
+        # addr2line looks for the function name in debug info first, then symbol table,
+        # which causes the inlined function to be displayed. Create a stripped binary here
+        # to avoid this.
+        binary_stripped = binary + '.stripped'
+        with file_creation_lock:
+            if not os.path.exists(binary_stripped):
+                subprocess.run(["strip", "--strip-debug", binary, "-o", binary_stripped], check=True)
         # Batch process addresses with addr2line
         addr2line_output = batch_addr2line(addr2line, binary, addresses)
         addr2line_lines = iter(addr2line_output)
+        addr2line_output_stripped = batch_addr2line(addr2line, binary_stripped, addresses)
+        addr2line_lines_stripped = iter(addr2line_output_stripped)
 
         for bb in bb_entries:
             entry = bb['entry']
@@ -47,8 +59,10 @@ def bb_to_fline(bb_csv, binary, addr2line):
             #
             # main
             # a.c:11
-            name = next(addr2line_lines).strip()
+            _ = next(addr2line_lines).strip()
+            name = next(addr2line_lines_stripped).strip()
             source_line = next(addr2line_lines).strip()
+            _ = next(addr2line_lines_stripped).strip()
             f_metrics = fs_metrics[name]
             line_metrics = lines_metrics[source_line]
             f_metrics['name'] = name
