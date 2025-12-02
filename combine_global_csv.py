@@ -36,7 +36,7 @@ if __name__ == '__main__':
                             writer.writeheader()
     
                         global_data_dict = next(global_csv_file_reader)
-                        workload_name = name if len(sim_file_names) == 1 else '{}.{}'.format(name, sim_file_name.split('.')[0])
+                        workload_name = name if len(sim_file_names) == 1 else '{}.{}'.format(name, sim_file_name.rsplit('.', 1)[0])
                         extra_data_dict = {'name': workload_name}
                         if workload_class:
                             extra_data_dict |= {'class': workload_class}
