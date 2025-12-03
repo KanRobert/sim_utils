@@ -67,7 +67,7 @@ workload,class
 881.neutron_s,fp_speed 
 '''
 
-reader = csv.DictReader(workload_class.split('\n'))
+reader = csv.DictReader([line.rstrip() for line in workload_class.split('\n')])
 workloads_classes = {}
 for line in reader:
     workloads_classes[line['workload']] = line['class']
