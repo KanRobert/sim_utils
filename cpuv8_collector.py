@@ -81,7 +81,7 @@ def get_workload_status(workload, log_dir, label):
     try:
         filter_res=subprocess.run(filter_grep, shell=True, capture_output=True, text=True)
     except TypeError:
-        filter_res=subprocess.run(filter_grep, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        filter_res=subprocess.run(filter_grep, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
     filenames_str = None
     if filter_res.stderr:
         print(filter_res.stderr)
@@ -91,7 +91,10 @@ def get_workload_status(workload, log_dir, label):
         filenames_str = ' '.join(filenames)
 
     command = f'echo {filenames_str} | xargs grep -r --include="*.log" "Error.*"'
-    res=subprocess.run(command, shell=True, capture_output=True, text=True)
+    try:
+        res=subprocess.run(command, shell=True, capture_output=True, text=True)
+    except TypeError:
+        res=subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 
     if res.stderr:
         print(res.stderr)
