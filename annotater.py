@@ -17,7 +17,8 @@ def annotate(disasm, perf):
         print('Total dynamic icount: ' + format(global_icount, ','), file=annotated)
         for line in disasm_file:
             line = line.rstrip()
-            if matches := inst_regex.match(line):
+            matches = inst_regex.match(line)
+            if matches:
                 pc = matches.group(1).lstrip('0')
                 execution = icounts[pc] if pc in icounts else 0
                 if execution:

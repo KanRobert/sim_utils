@@ -19,11 +19,14 @@ if __name__ == '__main__':
         for row in csv_reader:
             new_row = row.copy()
             sim_files = row['sim_files'].split(',')
+            status = row['status']
             exe = row['exe']
             new_row['exe'] = os.path.basename(exe)
             new_row['sim_files'] = ','.join([os.path.basename(sim_file) for sim_file in sim_files])
 
             sub_dir = os.path.join(args.dst, new_row['name'])
+            if status != "Success":
+                 continue
             if os.path.isdir(sub_dir):
                  shutil.rmtree(sub_dir)
             os.mkdir(sub_dir)

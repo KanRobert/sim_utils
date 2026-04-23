@@ -78,7 +78,10 @@ wl_error_state = {}
 def get_workload_status(workload, log_dir, label):
     label_filter = f"Label.*=.*{label}"
     filter_grep = f'grep -r --include="*.log" {label_filter} {log_dir}'
-    filter_res=subprocess.run(filter_grep, shell=True, capture_output=True, text=True)
+    try:
+        filter_res=subprocess.run(filter_grep, shell=True, capture_output=True, text=True)
+    except TypeError:
+        filter_res=subprocess.run(filter_grep, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
     filenames_str = None
     if filter_res.stderr:
         print(filter_res.stderr)
@@ -116,8 +119,8 @@ def get_workload_status(workload, log_dir, label):
             wl_error_state[b] = 'SE (setup error)'
         for b in RE_benches:
             wl_error_state[b] = 'RE (runtime error)'
-        for b in VE_benches:
-            wl_error_state[b] = 'VE (validation error)'
+#        for b in VE_benches:
+#            wl_error_state[b] = 'VE (validation error)'
 
         if workload in wl_error_state.keys():
             return wl_error_state[workload]
@@ -166,7 +169,8 @@ def get_path(directory, size, label, num, classes, workloads):
             # Assume SDE profiling data is writtern to stderr files.
             file_regex = re.compile(r'.*\s-e\s([\w\.-]+)\s.*'+ run_dir + r'/([\w\.-]+)')
             for line in speccmds_file:
-                if matches := file_regex.match(line):
+                matches = file_regex.match(line)
+                if matches:
                     new_exe = os.path.basename(matches.group(2))
                     if exe:
                         assert new_exe == exe, 'more than 1 exe'

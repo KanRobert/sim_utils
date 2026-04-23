@@ -10,7 +10,10 @@ file_creation_lock = threading.Lock()
 def batch_addr2line(addr2line, binary, addresses):
     """Batch process addresses to improve efficiency."""
     cmd = [addr2line, '-e', binary, '-f']
-    result = subprocess.run(cmd, input='\n'.join(addresses), stdout=PIPE, stderr=PIPE, text=True)
+    try:
+        result = subprocess.run(cmd, input='\n'.join(addresses), stdout=PIPE, stderr=PIPE, text=True)
+    except TypeError:
+        result = subprocess.run(cmd, input='\n'.join(addresses), stdout=PIPE, stderr=PIPE, universal_newlines=True)
     return result.stdout.strip().splitlines()
 
 def bb_to_fline(bb_csv, binary, addr2line):
