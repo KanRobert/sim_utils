@@ -45,7 +45,8 @@ def collect_metrics(metrics, matches):
         metrics[key] = val
 
 def update_bb_insn_info(line, metrics, icounts, image_addr_low, image_addr_high, image_first_load_addr, bb_writer):
-    if matches := block_regex.match(line):
+    matches = block_regex.match(line)
+    if matches:
         if metrics:
             bb_writer.writerow(metrics)
             metrics.clear() # clear metrics for next bb
@@ -54,21 +55,26 @@ def update_bb_insn_info(line, metrics, icounts, image_addr_low, image_addr_high,
             return
         metrics['entry'] = '{:x}'.format(entry - image_addr_low + image_first_load_addr)
         metrics['execution'] = int(matches.group(4))
-    elif matches := xdis_regex.match(line):
-        if 'entry' not in metrics:
-            return
-        addr = int(matches.group(1), 16)
-        assert addr >= image_addr_low or addr <= image_addr_high, 'entry should be None'
-        addr = addr - image_addr_low + image_first_load_addr
-        icounts[f'{addr:x}'] += metrics['execution']
-        metrics['exit'] = f'{addr:x}'
-    elif matches := record_regex.match(line):
-        if 'entry' not in metrics:
-            return
-        collect_metrics(metrics, matches)
+    else:
+        matches = xdis_regex.match(line)
+        if matches:
+            if 'entry' not in metrics:
+                return
+            addr = int(matches.group(1), 16)
+            assert addr >= image_addr_low or addr <= image_addr_high, 'entry should be None'
+            addr = addr - image_addr_low + image_first_load_addr
+            icounts[f'{addr:x}'] += metrics['execution']
+            metrics['exit'] = f'{addr:x}'
+        else:
+            matches = record_regex.match(line)
+            if matches:
+                if 'entry' not in metrics:
+                    return
+                collect_metrics(metrics, matches)
 
 def update_global_info(line, metrics):
-    if matches := record_regex.match(line):
+    matches = record_regex.match(line)
+    if matches:
         collect_metrics(metrics, matches)
 
 def get_image_first_load_addr(binary):
@@ -158,7 +164,8 @@ def convert_sde_perf_to_csv(sde_file, binary):
                 global_writer.writerow(global_metrics)
 
             if find_image_addr_beg and not find_image_addr_end:
-                if match := imag_addr_regex.match(line):
+                match = imag_addr_regex.match(line)
+                if match:
                     if os.path.basename(binary) in match.group(1):
                         image_addr_low = int(match.group(2), 16)
                         image_addr_high = int(match.group(3), 16)
