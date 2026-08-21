@@ -9,7 +9,7 @@ workload,class
 
 706.stockfish_r,int_rate 
 707.ntest_r,int_rate     
-708.sqlite_r,int_rate    
+708.sqlite_r,int_rate
 710.omnetpp_r,int_rate   
 714.cpython_r,int_rate   
 721.gcc_r,int_rate       
@@ -20,7 +20,6 @@ workload,class
 735.gem5_r,int_rate      
 750.sealcrypto_r,int_rate
 753.ns3_r,int_rate       
-760.rocksdb_r,int_rate   
 777.zstd_r,int_rate    
 
 709.cactus_r,fp_rate  
