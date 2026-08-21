@@ -21,6 +21,9 @@ if __name__ == '__main__':
             sim_files = row['sim_files'].split(',')
             status = row['status']
             exe = row['exe']
+            if not exe:
+                print(f"warning: skipping {row['name']}: exe path is empty")
+                continue
             new_row['exe'] = os.path.basename(exe)
             new_row['sim_files'] = ','.join([os.path.basename(sim_file) for sim_file in sim_files])
 
