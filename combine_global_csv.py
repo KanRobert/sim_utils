@@ -25,7 +25,7 @@ if __name__ == '__main__':
                 sim_file_abspath = os.path.join(sub_dir, sim_file_name)
                 global_csv_file_abspath = f'{sim_file_abspath}.global.csv'
                 if not os.path.exists(global_csv_file_abspath):
-                    print(f"File not found: {filepath}")
+                    print(f"File not found: {global_csv_file_abspath}")
                 try:
                     with open(global_csv_file_abspath, 'r') as global_csv_file:
                         global_csv_file_reader = csv.DictReader(global_csv_file)
