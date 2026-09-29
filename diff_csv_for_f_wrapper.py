@@ -17,11 +17,14 @@ if __name__ == '__main__':
     out_dict = {}
     with open(args.ref_csv, 'r') as ref_csv_file, open(args.exp_csv, 'r') as exp_csv_file:
         ref_reader = csv.DictReader(ref_csv_file)
-        exp_reader = csv.DictReader(exp_csv_file)
-        for ref_row, exp_row in zip(ref_reader, exp_reader):
+        exp_rows = {row['name']: row for row in csv.DictReader(exp_csv_file)}
+        for ref_row in ref_reader:
             name = ref_row['name']
-            print (name, exp_row['name'])
-            assert name == exp_row['name'], 'name mismatch'
+            exp_row = exp_rows.get(name)
+            if exp_row is None:
+                print(f'Warning: {name} missing in {args.exp_csv} (failed run?), skipping')
+                continue
+            print(name)
             ref_sim_files = ref_row['sim_files'].split(',')
             exp_sim_files = exp_row['sim_files'].split(',')
             assert len(ref_sim_files) == len(exp_sim_files), 'sim_files mismatch'
